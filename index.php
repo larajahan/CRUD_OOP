@@ -1,4 +1,17 @@
-<?php include 'inc/header.php'; ?>
+<?php 
+include 'inc/header.php'; 
+include 'config.php'; 
+include 'database.php'; 
+
+
+?>
+
+<?php 
+  $db = new Database();
+  $query = "SELECT * FROM table_user";
+  $read =$db->Select($query);
+
+   ?>
 
 
  <table class="tblone">
@@ -9,15 +22,22 @@
  		<th width="25%">Skill</th>
  		<th width="25%">Actions</th>
  	</tr>
-
+     <?php if ($read) { ?>
+     <?php while ($row =$read->fetch_assoc()) {    	
+      ?>
+      
  	<tr>
- 		<td>Name</td>
- 		<td>Email</td>
- 		<td>Skill</td>
- 		<td href="update.php">Edit</td>
+ 		<td><?php echo $row['name']; ?></td>
+ 		<td><?php echo $row['email']; ?></td>
+ 		<td><?php echo $row['skill']; ?></td>
+ 		<td href="update.php?id=<?php echo $row['id']; ?>;">Edit</td>
 
  	</tr>
+ 	<?php } ?>
  	
+ 	<?php } else{ ?>
+    <p>Data is not available !!</p>
+    <?php } ?>
 
 
  </table>
